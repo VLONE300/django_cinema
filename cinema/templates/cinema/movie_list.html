@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block movie_list %}
+    <div class="card-wrapper">
+        {% for movie in movie_list %}
+            <div class="card">
+                <div class="img-wrapper">
+                    <img class="card-img-top" src="{{ movie.image.url }}" alt="Card image cap">
+                </div>
+                <div class="card-body">
+                    <a href="{{ movie.get_absolute_url }}"><h5>{{ movie.title }}</h5></a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
