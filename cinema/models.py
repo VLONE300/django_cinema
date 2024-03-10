@@ -57,6 +57,8 @@ class Show(models.Model):
 class Ticket(models.Model):
     show = models.ForeignKey(Show, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    seat = models.IntegerField()
 
     def __str__(self):
         return f"Ticket for {self.show.movie.title} at {self.show.date} by {self.user.username}"
+
