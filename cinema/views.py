@@ -25,15 +25,14 @@ class MovieDetailView(DetailView):
 
 class BuyTicketView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        show_id = kwargs.get('show_id')  # предполагается, что ID сеанса передается в URL
+        show_id = kwargs.get('show_id')
         show = Show.objects.get(id=show_id)
         if show.available_seats > 0:
-            # Создаем билет
             ticket = Ticket.objects.create(show=show, user=request.user)
-            # Уменьшаем количество доступных мест
             show.available_seats -= 1
+            ticket.seat = show.available_seats - 1
+            ticket.save()
             show.save()
-            # Перенаправляем пользователя на страницу с подтверждением
             return redirect('movie-list')
         else:
             messages.error(request, 'No ticket available')
